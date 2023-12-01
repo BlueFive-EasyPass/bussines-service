@@ -1,0 +1,19 @@
+{
+  "name": "bussinesservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cookie": "^9.2.0",
+    "fastify": "^4.24.3",
+    "fastify-autoroutes": "^3.0.2",
+    "ts-node": "^10.9.1"
+  }
+}
