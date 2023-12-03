@@ -1,8 +1,8 @@
-import { SequelizeConnection } from '../infrastructure/database';
-import { IDatabaseConnection } from '../interfaces/databaseInterface';
+import { SequelizeConnection } from './database';
+import { IDatabaseConnection, IInstanceDB } from '../interfaces/databaseInterface';
 
 
-export class InstanceDB {
+export class InstanceDB implements IInstanceDB  {
     createConnection(): IDatabaseConnection {
         const sequelizeConnection = new SequelizeConnection();
 

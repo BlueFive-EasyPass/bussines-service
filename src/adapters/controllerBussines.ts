@@ -11,18 +11,39 @@ export class BussinesController implements IController {
     private bussines: IBussines
     private mid: IMidBussines
 
-    constructor(bussinesData: IBussines) {
+    constructor(bussinesData: IBussines, mid: IMidBussines) {
         this.bussines = bussinesData
-        this.mid = new MidBussines(this.bussines)
+        this.mid = mid
     }
 
-    SignUp(reply: FastifyReply) {
-        throw new Error('Method not implemented.')
+    async SignUp(reply: FastifyReply) {
+        try {
+            const resultFields = this.mid.validateCompleteBussines()
+            const resultSignUp = await this.bussines.saveToDatabase()
+
+            if (resultFields && resultSignUp) {
+                reply.code(200).send({ send: 'Cadastrado com sucesso' })
+            } else if (resultFields) {
+                reply.code(400).send({ error: 'Erro ao consultar empresa' })
+            } else {
+                reply.code(400).send({ error: 'Informações enviadas inválidas' })
+            }
+
+        } catch (error) {
+            reply.code(400).send({ error: 'Erro ao consultar empresa' })
+            throw error
+        }
     }
 
     async GetBussines(reply: FastifyReply) {
         try {
+
+            console.log(this.mid);
+            console.log(this.bussines);
+
+
             const resultSearch = await this.bussines.searchBussines()
+            console.log(resultSearch);
 
             if (resultSearch) {
                 reply.code(200).send({ send: resultSearch })

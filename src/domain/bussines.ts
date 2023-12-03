@@ -12,7 +12,23 @@ export class Bussines implements IBussines {
 
     async saveToDatabase() {
         try {
+            const resultSignUp = await this.bussinesService.signUp(this.bussinesData)
+
+            if (resultSignUp) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+    async searchBussines() {
+        try {
             const resultSearch = await this.bussinesService.searchUser(this.bussinesData)
+            console.log(resultSearch)
+
             if (resultSearch) {
                 return resultSearch
             } else {
@@ -22,8 +38,6 @@ export class Bussines implements IBussines {
             console.log(error)
             return false
         }
-    }
-    searchBussines() {
     }
     updateBussines(arg0: any) {
     }

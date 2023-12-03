@@ -1,10 +1,11 @@
 import { DataTypes } from 'sequelize';
 import { IDatabaseConnection } from '../interfaces/databaseInterface';
+import { IModelDB } from '../interfaces/interfaceModel';
 
 
-export class ModelDB {
+export class ModelDB implements IModelDB {
     private connection: IDatabaseConnection;
-    private instance;
+    private instance: IDatabaseConnection['getInstance'];
 
     constructor(connection: IDatabaseConnection) {
         this.connection = connection;
@@ -29,28 +30,33 @@ export class ModelDB {
             },
             buss_FotoPerfil: {
                 type: DataTypes.STRING,
-                allowNull: false
             },
             buss_endCEP: {
-                type: DataTypes.DATEONLY
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_endUF: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_endrua: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_endnum: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_endcomplemento: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
             },
             buss_endcidade: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_tipo: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_senha: {
                 type: DataTypes.STRING
@@ -59,16 +65,20 @@ export class ModelDB {
                 type: DataTypes.STRING
             },
             buss_endbairro: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             buss_email: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true
             }
         }, {
-            tableName: 'user',
+            tableName: 'bussines',
             timestamps: false
         });
     }
+
     async syncModel() {
         try {
             const bussines = this.defineModel();
@@ -79,8 +89,11 @@ export class ModelDB {
         } catch (err) {
             console.error('Erro ao sincronizar o modelo:', err);
             throw err;
-        } finally {
-            this.connection.Disconnect();
         }
+    }
+
+    desconnectModel() {
+        console.log('Modelo desconectado');
+        this.connection.Disconnect();
     }
 }

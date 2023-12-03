@@ -4,15 +4,30 @@ import { IBussinesService } from "../interfaces/interfaceService";
 
 export class BussinesService implements IBussinesService {
     private bussinesRepository: IBussinesRepository
-    constructor(bussinesRepository: IBussinesRepository){
+
+    constructor(bussinesRepository: IBussinesRepository) {
         this.bussinesRepository = bussinesRepository
     }
-    signUp(bussinesData: IBussines['bussinesData']): Promise<boolean> {
-        throw new Error("Method not implemented.");
+
+    async signUp(bussinesData: IBussines['bussinesData']): Promise<boolean> {
+        try {
+            const resultSignUp = await this.bussinesRepository.save(bussinesData)
+
+            if (resultSignUp) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            return false
+        }
     }
     async searchUser(bussinesData: IBussines['bussinesData']): Promise<any> {
         try {
+            console.log(bussinesData)
             const resultSearch = await this.bussinesRepository.get(bussinesData)
+            console.log(resultSearch)
+
             if (resultSearch) {
                 return resultSearch
             } else {
