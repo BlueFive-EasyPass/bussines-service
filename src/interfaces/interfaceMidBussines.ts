@@ -1,8 +1,8 @@
 
 export interface IMidBussines {
     validateCompleteBussines(): boolean;
-    validateLoginCredentials(): boolean
+    validateLoginCredentials(): Promise<boolean>
     createHash(): Promise<any>
-    compareHash(hash: any): Promise<boolean>
+    compareHash(hash: any): Promise<any>
     createToken(): Promise<string>;
 }

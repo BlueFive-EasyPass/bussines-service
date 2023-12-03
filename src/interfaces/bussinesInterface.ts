@@ -1,23 +1,34 @@
 export interface IBussines {
     bussinesData: {
-        buss_CNPJ: string | null,
-        buss_nome?: string | null,
-        buss_contato?: string | null,
-        buss_endCEP?: string | null,
-        buss_endUF?: string | null,
-        buss_endrua?: string | null,
-        buss_endnum?: string | null,
-        buss_endcomplemento?: string | null,
-        buss_endcidade?: string | null,
-        buss_tipo?: string | null,
-        buss_senha?: string | null,
-        buss_status?: string | null,
-        buss_endbairro?: string | null,
-        buss_email?: string | null
-    }
+        buss_CNPJ?: string,
+        buss_nome?: string,
+        buss_contato?: string,
+        buss_endCEP?: string,
+        buss_endUF?: string,
+        buss_endrua?: string,
+        buss_endnum?: string,
+        buss_endcomplemento?: string,
+        buss_endcidade?: string,
+        buss_tipo?: string,
+        buss_senha?: string,
+        buss_status?: string,
+        buss_endbairro?: string,
+        buss_email?: string
+    } | null
+
+    imagem?: {
+        data?: any
+        buss_CNPJ: string,
+        tipo: string
+    } | null
 
     saveToDatabase(): any
-    searchBussines(): any
-    updateBussines(arg0: any): any
+    search(): any
+    update(arg0: any): any
     loginSystem(): any
+    cancel(): any
+    activate(): any
+    sendImage(): any
+    getImage(): any
+    createPassword(): any
 }

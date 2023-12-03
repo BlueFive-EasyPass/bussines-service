@@ -3,6 +3,7 @@ import { Resource } from 'fastify-autoroutes'
 import { InstanceManager } from "../instanceManager";
 import { IController } from "../../interfaces/interfaceController";
 import { IBussines } from "../../interfaces/bussinesInterface";
+import { IInstanceManager } from "../../interfaces/interfaceInstanceManager";
 
 export default () => <Resource>{
     get: {
@@ -13,7 +14,7 @@ export default () => <Resource>{
 
             console.log(cleanQuery)
 
-            const instanceManager = new InstanceManager(cleanQuery)
+            const instanceManager: IInstanceManager = new InstanceManager(cleanQuery, null)
             const controller: IController = instanceManager.getController()
 
             console.log(instanceManager)
@@ -21,7 +22,7 @@ export default () => <Resource>{
 
 
             try {
-                await controller.GetBussines(reply)
+                await controller.Get(reply)
             } catch (error) {
                 reply.code(500).send({ error: "Erro ao processar a requisição:" });
                 throw error
@@ -34,11 +35,30 @@ export default () => <Resource>{
         handler: async (request: FastifyRequest, reply: FastifyReply) => {
             const bussinesData = request.body as IBussines['bussinesData']
             console.log(bussinesData);
-            const instanceManager = new InstanceManager(bussinesData)
+            const instanceManager: IInstanceManager = new InstanceManager(bussinesData, null)
             const controller: IController = instanceManager.getController()
 
             try {
                 await controller.SignUp(reply)
+            } catch (error) {
+                reply.code(500).send({ error: "Erro ao processar a requisição:" });
+                throw error
+            }
+        }
+    },
+
+    put: {
+        url: '/:CNPJ',
+        handler: async (request: FastifyRequest, reply: FastifyReply) => {
+            const bussines_CNPJ = request.params as any
+            const bussinesData = request.body as IBussines['bussinesData']
+            const instanceManager: IInstanceManager = new InstanceManager(bussinesData, null)
+            const controller: IController = instanceManager.getController()
+            console.log(bussines_CNPJ);
+            console.log(bussinesData)
+            
+            try {
+                await controller.Update(bussines_CNPJ, reply)
             } catch (error) {
                 reply.code(500).send({ error: "Erro ao processar a requisição:" });
                 throw error
