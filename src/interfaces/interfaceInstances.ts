@@ -4,7 +4,7 @@ import { IBussinesRepository } from "./interfaceRepository";
 export interface IInstances {
     createInstances(): {
       databaseConnection: IDatabaseConnection;
-      userRepository: IBussinesRepository;
-      userService: any;
+      bussinesRepository: IBussinesRepository;
+      bussinesService: any;
     };
   }
